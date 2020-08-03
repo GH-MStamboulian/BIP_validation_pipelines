@@ -93,6 +93,11 @@ if (bip_version == '3.5.3')
   parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/GH2.11.json"
   probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
   bip.version = "3.5.3-0-g8857b98"
+}else if (bip_version == '3.5.2')
+{
+  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/GH2.11.json"
+  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
+  bip.version = "3.5.2-0-g9e05762"
 }else if (bip_version == '3.5.0' | bip_version == '3.5')
 {
   parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/GH2.11.json"
