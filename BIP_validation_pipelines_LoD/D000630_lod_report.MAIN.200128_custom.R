@@ -90,18 +90,19 @@ table(type$Dilution, type$Type, type$ng_seq)
 
 if (bip_version == '3.5.3')
 {
-  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/GH2.11.json"
-  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
+  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/ghpipeline/parameter_sets/GH2.11.json"
+  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
   bip.version = "3.5.3-0-g8857b98"
 }else if (bip_version == '3.5.2')
 {
-  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/GH2.11.json"
-  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
-  bip.version = "3.5.2-0-g9e05762"
+  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/ghpipeline/parameter_sets/GH2.11.json"
+  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
+  #bip.version = "3.5.2-0-g9e05762"
+  bip.version = "3.5.2-rc2-0-g9e05762"
 }else if (bip_version == '3.5.0' | bip_version == '3.5')
 {
-  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/GH2.11.json"
-  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/moses/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
+  parameterSetJson <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/ghpipeline/parameter_sets/GH2.11.json"
+  probesBed <- "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/ghpipeline/parameter_sets/G360/v2.11/GH2.11_probes.bed"
   bip.version = "3.5-0-g15db6a0"
 }
 
@@ -109,7 +110,7 @@ if (bip_version == '3.5.3')
 #make this if statement smarter, check whether or not the R object exists, if so then don't enter the if statement
 if(!file.exists(file.path(resdir, "work.RData")) ) {
   algoVersion = "v3.5"
-  parameterSet <- fromJSON(parameterSetJson)
+  parameterSet <- fromJSON(readLines(parameterSetJson))
   probes = getCnvProbes(probeFile=probesBed, algoVersion = algoVersion)
   params = getCnvParams (jsonFile = parameterSetJson, algoVersion = algoVersion)
   
