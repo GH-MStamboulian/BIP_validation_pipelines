@@ -58,7 +58,7 @@ table_variant_level_ppa_df["bip:"+bip_version_1+"_CI_0.95_upper"] = table_1_df["
 table_variant_level_ppa_df["bip:"+bip_version_2+"_CI_0.95_lower"] = table_2_df["bip:"+bip_version_2+"_CI_0.95_lower"]
 table_variant_level_ppa_df["bip:"+bip_version_2+"_CI_0.95_upper"] = table_2_df["bip:"+bip_version_2+"_CI_0.95_upper"]
 
-table_variant_level_ppa_df.to_csv(out_dir + 'variantLevelPPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
+table_variant_level_ppa_df.to_csv(out_dir + 'variantLevelPPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.tsv')
 
 #######################################
 ##  variant class level False Negatives
@@ -84,7 +84,7 @@ table_variant_level_False_Negatives_df["variant"] = [item[1] for item in all_var
 table_variant_level_False_Negatives_df["bip:"+bip_version_1+"_FN"] = [int(table_3_df[table_3_df["variant"] == var]["number of false negatives"]) if len(table_3_df[table_3_df["variant"] == var]) > 0 else "NaN" for var in  [item[1] for item in all_variant_class_variant_tuples]]
 table_variant_level_False_Negatives_df["bip:"+bip_version_2+"_FN"] = [int(table_3_df[table_3_df["variant"] == var]["number of false negatives"]) if len(table_4_df[table_3_df["variant"] == var]) > 0 else "NaN" for var in  [item[1] for item in all_variant_class_variant_tuples]]
 
-table_variant_level_False_Negatives_df.to_csv(out_dir + 'variantLevelFalseNegatives_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
+table_variant_level_False_Negatives_df.to_csv(out_dir + 'variantLevelFalseNegatives_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.tsv')
 
 ########################
 ##  within condition PPA
@@ -106,7 +106,7 @@ table_within_condition_PPA_df["bip:"+bip_version_1+"_CI_0.95_upper"] = table_5_d
 table_within_condition_PPA_df["bip:"+bip_version_2+"_CI_0.95_lower"] = table_6_df["CI_0.95_lower"]
 table_within_condition_PPA_df["bip:"+bip_version_2+"_CI_0.95_upper"] = table_6_df["CI_0.95_upper"]
 
-table_within_condition_PPA_df.to_csv(out_dir + 'withinConditionPPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
+table_within_condition_PPA_df.to_csv(out_dir + 'withinConditionPPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.tsv')
 
 ####################
 ##  sample level NPA
@@ -124,7 +124,7 @@ table_sample_level_NPA_df["bip:"+bip_version_1+ "_sample_level_NPA"] = table_7_d
 table_sample_level_NPA_df["bip:"+bip_version_2+ "_sample_level_NPA"] = table_8_df["sample_level_NPA"]
 table_sample_level_NPA_df["95%_CI"] = table_7_df["95%_CI"]
 
-table_sample_level_NPA_df.to_csv(out_dir + 'sampleLevelNPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
+table_sample_level_NPA_df.to_csv(out_dir + 'sampleLevelNPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.tsv')
 
 ################
 ##  build report
@@ -221,10 +221,10 @@ elems.append(table)
 
 
 data = list()
-data.append(list(table_within_condtion_PPA_df.columns))
+data.append(list(table_within_condition_PPA_df.columns))
 
-for i, row in table_within_condtion_PPA_df.iterrows():
-    data.append(list(table_within_condtion_PPA_df.loc[i]))
+for i, row in table_within_condition_PPA_df.iterrows():
+    data.append(list(table_within_condition_PPA_df.loc[i]))
     
 table = construct_table(data)
 
@@ -238,10 +238,10 @@ elems.append(table)
 
 
 data = list()
-data.append(list(table_sample_level_NPA.columns))
+data.append(list(table_sample_level_NPA_df.columns))
 
-for i, row in table_sample_level_NPA.iterrows():
-    data.append(list(table_sample_level_NPA.loc[i]))
+for i, row in table_sample_level_NPA_df.iterrows():
+    data.append(list(table_sample_level_NPA_df.loc[i]))
     
 table = construct_table(data)
 
