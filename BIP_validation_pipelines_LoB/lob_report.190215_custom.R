@@ -49,7 +49,7 @@ print(getwd())
 
 
 # Code location
-gitDir = "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPLINES/repositories"
+gitDir = "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories"
 bipDir = file.path(gitDir, "ghpipeline") #file.path's delimiter is a / autimatically so no need to end your strings with "/"
 localDir = file.path(gitDir, "data_science")
 #setwd("/host_home/git/data_science/02_DEVELOPMENT/181010_IVD_LoB")
@@ -167,7 +167,7 @@ get_FolderIDs <- function(runid) {
 if( !file.exists(file.path(resdir, "work.file.RData"))) {
   repo = g360.repo
   algoVersion = "v3.5"
-  parameterSet <- fromJSON(parameterSetJson)
+  parameterSet <- fromJSON(readLines(parameterSetJson))
   probes = getCnvProbes(probeFile=probesBed, algoVersion = algoVersion)
   params = getCnvParams (jsonFile = parameterSetJson, algoVersion = algoVersion)
   
@@ -182,10 +182,11 @@ if( !file.exists(file.path(resdir, "work.file.RData"))) {
   runid = type$runid
   
   folderid <- get_FolderIDs(runid)
-  
   for(n in files.ext) data[[tables[which(n == files.ext)]]] = 
     import_data_from_repo(run_sample_id, folderid, repo='', params, probes, 
                           what = n, sep="\t", version = bip.version, mc.cores=8)
+  print("is this okay?")
+
   names(data) = tables
   data = lapply(tables, function(n) data[[n]] = rbindlist(data[[n]]))
   names(data) = tables

@@ -2,7 +2,7 @@
 The top level analysis script for the accuracy study.
 """
 import sys
-sys.path.append("/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPLINES/repositories/data_science/08_FDA/G360/180801_ANALYTICAL_VALIDATION/")
+sys.path.append("/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/repositories/data_science/08_FDA/G360/180801_ANALYTICAL_VALIDATION/")
 import os
 from D000111d.etl_ld2analysis.load import load as load_study_data
 from D000111d.compare_calls.compare_calls import get_call_comparisons, get_call_comparisons_2test

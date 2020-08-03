@@ -82,8 +82,8 @@ accuracy_out_dir = out_dir + "accuracy_comparsion/"
 if not os.path.isdir(accuracy_out_dir):
     os.mkdir(accuracy_out_dir)
 
-#os.system("python3 BIP_validation_pipelines_accuracy/compare_accuracy_values.py -o " + accuracy_out_dir + " -d1 " + accuracy_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + accuracy_data_dir + version2+"/" + " -v2 " + version2)
-print("python3 BIP_validation_pipelines_accuracy/compare_accuracy_values.py -o " + accuracy_out_dir + " -d1 " + accuracy_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + accuracy_data_dir + version2+"/" + " -v2 " + version2)
+os.system("python3 BIP_validation_pipelines_accuracy/compare_accuracy_values.py -o " + accuracy_out_dir + " -d1 " + accuracy_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + accuracy_data_dir + version2+"/" + " -v2 " + version2)
+#print("python3 BIP_validation_pipelines_accuracy/compare_accuracy_values.py -o " + accuracy_out_dir + " -d1 " + accuracy_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + accuracy_data_dir + version2+"/" + " -v2 " + version2)
 
 
 print('#####################')
@@ -96,8 +96,8 @@ precision_out_dir = out_dir + "precision_comparsion/"
 if not os.path.isdir(precision_out_dir):
     os.mkdir(precision_out_dir)
 
-#os.system("python3 BIP_validation_pipelines_precision/compare_precision_values.py -o " + precision_out_dir + " -d1 " + precision_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + precision_data_dir + version2+"/" + " -v2 " + version2)
-print("python3 BIP_validation_pipelines_precision/compare_precision_values.py -o " + precision_out_dir + " -d1 " + precision_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + precision_data_dir + version2+"/" + " -v2 " + version2)
+os.system("python3 BIP_validation_pipelines_precision/compare_precision_values.py -o " + precision_out_dir + " -d1 " + precision_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + precision_data_dir + version2+"/" + " -v2 " + version2)
+#print("python3 BIP_validation_pipelines_precision/compare_precision_values.py -o " + precision_out_dir + " -d1 " + precision_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + precision_data_dir + version2+"/" + " -v2 " + version2)
 
 
 print('#######################')
@@ -110,8 +110,8 @@ sensitivity_out_dir = out_dir + "sensitivity_comparsion/"
 if not os.path.isdir(sensitivity_out_dir):
     os.mkdir(sensitivity_out_dir)
 
-#os.system("python3 BIP_validation_pipelines_LoD/compare_LoD_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + sensitivity_out_dir + " -d1 " + sensitivity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + sensitivity_data_dir + version2+"/" + " -v2 " + version2)
-print("python3 BIP_validation_pipelines_LoD/compare_LoD_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + sensitivity_out_dir + " -d1 " + sensitivity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + sensitivity_data_dir + version2+"/" + " -v2 " + version2)
+os.system("python3 BIP_validation_pipelines_LoD/compare_LoD_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + sensitivity_out_dir + " -d1 " + sensitivity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + sensitivity_data_dir + version2+"/" + " -v2 " + version2)
+#print("python3 BIP_validation_pipelines_LoD/compare_LoD_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + sensitivity_out_dir + " -d1 " + sensitivity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + sensitivity_data_dir + version2+"/" + " -v2 " + version2)
 
 
 print('#######################')
@@ -124,5 +124,5 @@ specificity_out_dir = out_dir + "specificity_comparsion/"
 if not os.path.isdir(specificity_out_dir):
     os.mkdir(specificity_out_dir)
 
-#os.system("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
-print("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
+os.system("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
+#print("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)

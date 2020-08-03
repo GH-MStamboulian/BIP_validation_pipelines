@@ -77,6 +77,7 @@ out_dir1 = out_dir+'/out_1_bip_'+version1+'/'
 if not os.path.isdir(out_dir1):
     os.makedirs(out_dir1)
 
+#print("docker run --rm -v /ghds/:/ghds/ --user $(id -u):$(id -g) " + docker_image + " Rscript " + r_script_dir + r_script + " -i " +  bip_out_dir + " -d " + data_tables_dir + " -o " +out_dir1 + " -v " + version1 + " -a " + abs_dir)
 os.system("docker run --rm -v /ghds/:/ghds/ --user $(id -u):$(id -g) " + docker_image + " Rscript " + r_script_dir + r_script + " -i " +  bip_out_dir + " -d " + data_tables_dir + " -o " +out_dir1 + " -v " + version1 + " -a " + abs_dir)
 
 os.system("python3 get_FPvariants.py " + out_dir1)
@@ -89,6 +90,7 @@ out_dir2 = out_dir+'/out_2_bip_'+version2+'/'
 if not os.path.isdir(out_dir2):
     os.makedirs(out_dir2)
 
+#print("docker run --rm -v /ghds/:/ghds/ --user $(id -u):$(id -g) " + docker_image + " Rscript " + r_script_dir + r_script + " -i " +  bip_out_dir + " -d " + data_tables_dir + " -o " +out_dir2 + " -v " + version2 + " -a " + abs_dir)
 os.system("docker run --rm -v /ghds/:/ghds/ --user $(id -u):$(id -g) " + docker_image + " Rscript " + r_script_dir + r_script + " -i " +  bip_out_dir + " -d " + data_tables_dir + " -o " +out_dir2 + " -v " + version2 + " -a " + abs_dir)
 
 os.system("python3 get_FPvariants.py " + out_dir2)
