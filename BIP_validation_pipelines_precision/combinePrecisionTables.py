@@ -93,18 +93,18 @@ table_variant_level_False_Negatives_df.to_csv(out_dir + 'variantLevelFalseNegati
 table_5_df = pd.read_csv(table_5_f, sep = '\t')
 table_6_df = pd.read_csv(table_6_f, sep = '\t')
 
-table_within_condtion_PPA_df = pd.DataFrame(columns = ["Condition", "bip:" + bip_version_1 + "_n_+ve_calls", "bip:" + bip_version_2 + "_n_+ve_calls", "n_expected_calls", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_1+"_CI_0.95_lower", "bip:"+bip_version_1+"_CI_0.95_upper", "bip:"+bip_version_2+"_CI_0.95_lower", "bip:"+bip_version_2+"_CI_0.95_upper"])
+table_within_condition_PPA_df = pd.DataFrame(columns = ["Condition", "bip:" + bip_version_1 + "_n_+ve_calls", "bip:" + bip_version_2 + "_n_+ve_calls", "n_expected_calls", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_1+"_CI_0.95_lower", "bip:"+bip_version_1+"_CI_0.95_upper", "bip:"+bip_version_2+"_CI_0.95_lower", "bip:"+bip_version_2+"_CI_0.95_upper"])
 
-table_within_condtion_PPA_df["Condition"] = table_5_df["Condition"]
-table_within_condtion_PPA_df["bip:" + bip_version_1 + "_n_+ve_calls"] = table_5_df["number of positive calls"]
-table_within_condtion_PPA_df["bip:" + bip_version_2 + "_n_+ve_calls"] = table_6_df["number of positive calls"]
-table_within_condtion_PPA_df["n_expected_calls"] = table_5_df["total number of expected calls"]
-table_within_condtion_PPA_df["bip:" + bip_version_1 + "_PPA"] = table_5_df["number of positive calls"]
-table_within_condtion_PPA_df["bip:" + bip_version_2 + "_PPA"] = table_6_df["number of positive calls"]
-table_within_condtion_PPA_df["bip:"+bip_version_1+"_CI_0.95_lower"] = table_5_df["CI_0.95_lower"]
-table_within_condtion_PPA_df["bip:"+bip_version_1+"_CI_0.95_upper"] = table_5_df["CI_0.95_upper"]
-table_within_condtion_PPA_df["bip:"+bip_version_2+"_CI_0.95_lower"] = table_6_df["CI_0.95_lower"]
-table_within_condtion_PPA_df["bip:"+bip_version_2+"_CI_0.95_upper"] = table_6_df["CI_0.95_upper"]
+table_within_condition_PPA_df["Condition"] = table_5_df["Condition"]
+table_within_condition_PPA_df["bip:" + bip_version_1 + "_n_+ve_calls"] = table_5_df["number of positive calls"]
+table_within_condition_PPA_df["bip:" + bip_version_2 + "_n_+ve_calls"] = table_6_df["number of positive calls"]
+table_within_condition_PPA_df["n_expected_calls"] = table_5_df["total number of expected calls"]
+table_within_condition_PPA_df["bip:" + bip_version_1 + "_PPA"] = table_5_df["number of positive calls"]
+table_within_condition_PPA_df["bip:" + bip_version_2 + "_PPA"] = table_6_df["number of positive calls"]
+table_within_condition_PPA_df["bip:"+bip_version_1+"_CI_0.95_lower"] = table_5_df["CI_0.95_lower"]
+table_within_condition_PPA_df["bip:"+bip_version_1+"_CI_0.95_upper"] = table_5_df["CI_0.95_upper"]
+table_within_condition_PPA_df["bip:"+bip_version_2+"_CI_0.95_lower"] = table_6_df["CI_0.95_lower"]
+table_within_condition_PPA_df["bip:"+bip_version_2+"_CI_0.95_upper"] = table_6_df["CI_0.95_upper"]
 
 table_within_condition_PPA_df.to_csv(out_dir + 'withinConditionPPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
 
@@ -115,16 +115,16 @@ table_within_condition_PPA_df.to_csv(out_dir + 'withinConditionPPA_precision1_bi
 table_7_df = pd.read_csv(table_7_f, sep = '\t')
 table_8_df = pd.read_csv(table_8_f, sep = '\t')
 
-table_sample_level_NPA = pd.DataFrame(columns = ["N_samples", "bip:"+bip_version_1+ "N_samples_with_FP", "bip:"+bip_version_2+ "N_samples_with_FP", "bip:"+bip_version_1+ "_sample_level_NPA", "bip:"+bip_version_2+ "_sample_level_NPA", "95%_CI"])
+table_sample_level_NPA_df = pd.DataFrame(columns = ["N_samples", "bip:"+bip_version_1+ "N_samples_with_FP", "bip:"+bip_version_2+ "N_samples_with_FP", "bip:"+bip_version_1+ "_sample_level_NPA", "bip:"+bip_version_2+ "_sample_level_NPA", "95%_CI"])
 
-table_sample_level_NPA["N_samples"] = table_7_df["Number_samples"]
-table_sample_level_NPA["bip:"+bip_version_1+ "N_samples_with_FP"] = table_7_df["N_samples_with_False_Positives"]
-table_sample_level_NPA["bip:"+bip_version_2+ "N_samples_with_FP"] = table_8_df["N_samples_with_False_Positives"]
-table_sample_level_NPA["bip:"+bip_version_1+ "_sample_level_NPA"] = table_7_df["sample_level_NPA"]
-table_sample_level_NPA["bip:"+bip_version_2+ "_sample_level_NPA"] = table_8_df["sample_level_NPA"]
-table_sample_level_NPA["95%_CI"] = table_7_df["95%_CI"]
+table_sample_level_NPA_df["N_samples"] = table_7_df["Number_samples"]
+table_sample_level_NPA_df["bip:"+bip_version_1+ "N_samples_with_FP"] = table_7_df["N_samples_with_False_Positives"]
+table_sample_level_NPA_df["bip:"+bip_version_2+ "N_samples_with_FP"] = table_8_df["N_samples_with_False_Positives"]
+table_sample_level_NPA_df["bip:"+bip_version_1+ "_sample_level_NPA"] = table_7_df["sample_level_NPA"]
+table_sample_level_NPA_df["bip:"+bip_version_2+ "_sample_level_NPA"] = table_8_df["sample_level_NPA"]
+table_sample_level_NPA_df["95%_CI"] = table_7_df["95%_CI"]
 
-table_sample_level_NPA.to_csv(out_dir + 'sampleLevelNPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
+table_sample_level_NPA_df.to_csv(out_dir + 'sampleLevelNPA_precision1_bip_' + bip_version_1 + '_precision2_bip_' + bip_version_2 + '.pdf')
 
 ################
 ##  build report
