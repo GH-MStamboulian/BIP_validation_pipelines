@@ -8,7 +8,7 @@ bip_1_out_dir = sys.argv[1]
 version1 = sys.argv[2]
 bip_2_out_dir = sys.argv[3]
 version2 = sys.argv[4]
-out_dir = "/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPLINES/accuracy_comparison/"
+out_dir = sys.argv[5]
 
 fileName = out_dir + 'accuracy1_bip_' + version1 + '_accuracy2_bip_' + version2 + '.pdf'
 
