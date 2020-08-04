@@ -130,4 +130,10 @@ if not os.path.isdir(specificity_out_dir):
 os.system("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
 #print("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
 
+print('#########################')
+print('##  generate final report')
+print('#########################')
+
+os.system("python3 generateFinalReport.py " + version1 + " " + version2 + " " + out_dir)
+
 print("finished processing in", time.time() - time_start, 'seconds')
