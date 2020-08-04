@@ -93,7 +93,7 @@ bip_out_dir=args.in_dir2
 data_tables_dir=args._data_tables_dir2
 version2=args.version2
 
-out_dir2 = out_dir+'/out_2_bip_'+version1+'/'
+out_dir2 = out_dir+'/out_2_bip_'+version2+'/'
 if not os.path.isdir(out_dir2):
     os.makedirs(out_dir2)
 #os.system("docker exec --user 36154:21508 ade6b00f8f33 Rscript " + abs_dir + r_script + " -i " + bip_out_dir + " -d " + data_tables_dir + " -o " + out_dir2 + " -v " + version2 + " -a " + abs_dir)
