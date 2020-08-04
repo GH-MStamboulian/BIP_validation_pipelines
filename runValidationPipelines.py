@@ -80,7 +80,7 @@ print('##  compare accuracy')
 print('####################')
 
 accuracy_data_dir = data_dir + "accuracy/"
-accuracy_out_dir = out_dir + "accuracy_comparsion/"
+accuracy_out_dir = out_dir + "accuracy_comparison/"
 
 if not os.path.isdir(accuracy_out_dir):
     os.mkdir(accuracy_out_dir)
@@ -94,7 +94,7 @@ print('##  compare precision')
 print('#####################')
 
 precision_data_dir = data_dir + "precision/"
-precision_out_dir = out_dir + "precision_comparsion/"
+precision_out_dir = out_dir + "precision_comparison/"
 
 if not os.path.isdir(precision_out_dir):
     os.mkdir(precision_out_dir)
@@ -108,7 +108,7 @@ print('##  compare sensitivity')
 print('#######################')
 
 sensitivity_data_dir = data_dir + "sensitivity/"
-sensitivity_out_dir = out_dir + "sensitivity_comparsion/"
+sensitivity_out_dir = out_dir + "sensitivity_comparison/"
 
 if not os.path.isdir(sensitivity_out_dir):
     os.mkdir(sensitivity_out_dir)
@@ -122,7 +122,7 @@ print('##  compare specificity')
 print('#######################')
 
 specificity_data_dir = data_dir + "specificity/"
-specificity_out_dir = out_dir + "specificity_comparsion/"
+specificity_out_dir = out_dir + "specificity_comparison/"
 
 if not os.path.isdir(specificity_out_dir):
     os.mkdir(specificity_out_dir)
@@ -130,4 +130,4 @@ if not os.path.isdir(specificity_out_dir):
 os.system("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
 #print("python3 BIP_validation_pipelines_LoB/compare_LoB_values.py -i1 " + bip_out_dir + " -i2 " + bip_out_dir + " -o " + specificity_out_dir + " -d1 " + specificity_data_dir + version1+"/" + " -v1 " + version1 + " -d2 " + specificity_data_dir + version2+"/" + " -v2 " + version2)
 
-print("finished processing in", time.time() - time_now, 'seconds')
+print("finished processing in", time.time() - time_start, 'seconds')
