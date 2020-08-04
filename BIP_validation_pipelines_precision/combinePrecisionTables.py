@@ -93,7 +93,7 @@ table_variant_level_False_Negatives_df.to_csv(out_dir + 'variantLevelFalseNegati
 table_5_df = pd.read_csv(table_5_f, sep = '\t')
 table_6_df = pd.read_csv(table_6_f, sep = '\t')
 
-table_within_condition_PPA_df = pd.DataFrame(columns = ["Condition", "bip:" + bip_version_1 + "_n_+ve_calls", "bip:" + bip_version_2 + "_n_+ve_calls", "n_expected_calls", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_1+"_CI_0.95_lower", "bip:"+bip_version_1+"_CI_0.95_upper", "bip:"+bip_version_2+"_CI_0.95_lower", "bip:"+bip_version_2+"_CI_0.95_upper"])
+table_within_condition_PPA_df = pd.DataFrame(columns = ["Condition", "bip:" + bip_version_1 + "_n_+ve_calls", "bip:" + bip_version_2 + "_n_+ve_calls", "n_expected_calls", "bip:"+bip_version_1+"_PPA", "bip:"+bip_version_2+"_PPA", "bip:"+bip_version_1+"_CI_0.95_lower", "bip:"+bip_version_1+"_CI_0.95_upper", "bip:"+bip_version_2+"_CI_0.95_lower", "bip:"+bip_version_2+"_CI_0.95_upper"])
 
 table_within_condition_PPA_df["Condition"] = table_5_df["Condition"]
 table_within_condition_PPA_df["bip:" + bip_version_1 + "_n_+ve_calls"] = table_5_df["number of positive calls"]
