@@ -18,12 +18,12 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 
 
-version1 = sys.argv[1]#"3.5.2"
-version2 = sys.argv[2]#"3.5.3"
+version1 = sys.argv[1]
+version2 = sys.argv[2]
 
-out_dir = sys.argv[3]#"/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/BIP_validation_pipelines_comparisons/"
+out_dir = sys.argv[3]
 
-data_dir = sys.argv[4]#"/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/BIP_validation_pipelines_data/"
+data_dir = sys.argv[4]
 
 fileName = out_dir + 'BIP_validation_report.pdf'
 
@@ -131,11 +131,25 @@ style_header_3 = ParagraphStyle(
         fontSize=14,        
     )
 
+style_header_4 = ParagraphStyle(
+        name='Normal',
+        fontSize=12.5,        
+    )
+
 style_text = ParagraphStyle(
         name='Normal',
         fontSize=12,        
     )
 
+style_text_1 = ParagraphStyle(
+        name='Normal',
+        fontSize=10,        
+    )
+
+style_footer = ParagraphStyle(
+        name='Normal',
+        fontSize=6,        
+    )
 
 pagesize = (height, width)
 elems = []
@@ -213,12 +227,16 @@ for i, row in accuracy_PPA_table_df.iterrows():
 table = construct_table(data)
 #elems.append(S0_5)
 P = Paragraph("Accuracy PPA", style_header_3)
-elems.append(S0_5)
+elems.append(S0)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
 
-
+P = Paragraph("acceptable PPA:minimum acceptance criteria for PPA calculated in accordance to the report 'D-000111'; CDx / LBP70:variants detected by G360 method and MD Anderson"
+              "+ for detected, - for not detected; PPA:Positive Percent Agreement; LLCI:Lower level of 95% confidence interval; ULCI:Upper level of 95% confidence intervel"
+              ,
+              style = style_footer)
+elems.append(P)
 
 accuracy_NPA_table_f = accuracy_dir + 'accuracy_NPA_merged_table_1_bip_'+version1+'_2_bip_'+version2+'.tsv'
 accuracy_NPA_table_df = pd.read_csv(accuracy_NPA_table_f, sep = '\t')
@@ -227,6 +245,8 @@ accuracy_NPA_table_df.columns = ['variant \ncategory', 'variant \ntype', 'accept
        'bip:'+version1+'\nCDx+/LBP70-', 'bip:'+version2+'\nCDx+/LBP70-', 'bip:'+version1+'\nCDx-/LBP70-',
        'bip:'+version2+'\nCDx-/LBP70-', 'bip:'+version1+' \nNPA', 'bip:'+version2+' \nNPA', 'LLCI',
        'ULCI']
+
+
 
 data = list()
 data.append(list(accuracy_NPA_table_df.columns))
@@ -240,8 +260,74 @@ elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
+P = Paragraph("acceptable NPA:minimum acceptance criteria for NPA calculated in accordance to the report 'D-000111'; NPA:Positive Percent Agreement; "
+              ,
+              style = style_footer)
+elems.append(P)
 
 
+P = Paragraph("Accuracy comparison conclusions", style_header_3)
+elems.append(S0)
+elems.append(P)
+P = Paragraph("Accuracy PPA", style_header_4)
+elems.append(S0)
+elems.append(P)
+
+accuracy_ppa_conclusions = ""
+
+variants = ["SNV", "Indel", "CNA", "Fusion"]
+variant_types = ["Clinically Relevant", "Panel-wide"]
+
+i=0
+for variant_type in variant_types:
+    for variant in variants:        
+        version_1 = accuracy_PPA_table_df[(accuracy_PPA_table_df['variant \ncategory'] == variant) & (accuracy_PPA_table_df['variant\n type'] == variant_type)]
+        version_2 = accuracy_PPA_table_df[(accuracy_PPA_table_df['variant \ncategory'] == variant) & (accuracy_PPA_table_df['variant\n type'] == variant_type)]
+        if len(version_1['bip:'+version1+'\nCDx-/LBP70+']) == 0:
+            missed_by_version1 = 0
+        else:
+            missed_by_version1 = int(version_1['bip:'+version1+'\nCDx-/LBP70+'])
+        if len(version_2['bip:'+version2+'\nCDx-/LBP70+']) == 0:
+            missed_by_version2 = 0
+        else:
+            missed_by_version2 = int(version_2['bip:'+version2+'\nCDx-/LBP70+'])
+        
+        accuracy_ppa_conclusions += str(i+1) + ")There were "+str(missed_by_version1) +" " + variant_type + " " +variant + " missed by BIP version " + version1 + " and " +str(missed_by_version2) +" " + variant_type + " " + variant + " missed by BIP version " + version2 +"<br/><br/>"
+        i+=1 
+        
+P = Paragraph(accuracy_ppa_conclusions, style = style_text_1)
+elems.append(P)
+
+
+elems.append(S0)
+P = Paragraph("Accuracy NPA", style_header_4)
+elems.append(S0)
+elems.append(P)
+
+accuracy_npa_conclusions = ""
+
+variants = ["SNV", "Indel", "CNA", "Fusion"]
+variant_types = ["Clinically Relevant", "Panel-wide"]
+
+i = 0
+for variant_type in variant_types:
+    for variant in variants:        
+        version_1 = accuracy_NPA_table_df[(accuracy_NPA_table_df['variant \ncategory'] == variant) & (accuracy_NPA_table_df['variant \ntype'] == variant_type)]
+        version_2 = accuracy_NPA_table_df[(accuracy_NPA_table_df['variant \ncategory'] == variant) & (accuracy_NPA_table_df['variant \ntype'] == variant_type)]        
+        if len(version_1['bip:'+version1+'\nCDx+/LBP70-']) == 0:
+            missed_by_version1 = 0
+        else:
+            missed_by_version1 = int(version_1['bip:'+version1+'\nCDx+/LBP70-'])
+        if len(version_2['bip:'+version2+'\nCDx+/LBP70-']) == 0:
+            missed_by_version2 = 0
+        else:
+            missed_by_version2 = int(version_2['bip:'+version2+'\nCDx+/LBP70-'])
+        
+        accuracy_npa_conclusions += str(i+1) + ")There were "+str(missed_by_version1) +" " + variant_type + " " +variant + " false +ve calls by BIP version " + version1 + " and " +str(missed_by_version2) +" " + variant_type + " " + variant + " false +ve calls by BIP version " + version2 +"<br/><br/>"
+        i+=1
+P = Paragraph(accuracy_npa_conclusions, style = style_text_1)
+elems.append(P)
+        
 
 
 elems.append(PageBreak())
@@ -272,7 +358,7 @@ precision_variantLevelPPA_table_f = precision_dir + 'variantLevelPPA_precision1_
 precision_variantLevelPPA_table_df = pd.read_csv(precision_variantLevelPPA_table_f, sep = ',')
 del precision_variantLevelPPA_table_df['Unnamed: 0']
 
-precision_variantLevelPPA_table_df.columns = ['variant\nclass', 'bip:'+version1+'\n+ve calls', 'bip:'+version2+'\n+ve_calls',
+precision_variantLevelPPA_table_df.columns = ['variant\nclass', 'bip:'+version1+'\n+ve calls', 'bip:'+version2+'\n+ve calls',
        'expected\ncalls', 'bip:'+version1+'\nPPA', 'bip:'+version2+'\nPPA',
        'bip:'+version1+'\nCI 0.95 lower', 'bip:'+version1+'\nCI 0.95 upper',
        'bip:'+version2+'\nCI 0.95 lower', 'bip:'+version2+'\nCI 0.95 upper']
@@ -296,6 +382,11 @@ elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
+P = Paragraph("+ve calls:number of variants detected by the method; expected calls:number of variants expected to be found in a sample"
+              ,
+              style = style_footer)
+elems.append(P)
+
 
 precision_variantLevelFalseNegatives_table_f = precision_dir + 'variantLevelFalseNegatives_precision1_bip_'+version1+'_precision2_bip_'+version2+'.tsv'
 precision_variantLevelFalseNegatives_table_df = pd.read_csv(precision_variantLevelFalseNegatives_table_f, sep = ',')
@@ -313,6 +404,10 @@ elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
+P = Paragraph("FN:number of true variants in the sample failed to be classified as positive by the method"
+              ,
+              style = style_footer)
+elems.append(P)
 elems.append(PageBreak())
 
 precision_withinCondtionPPA_table_f = precision_dir + 'withinConditionPPA_precision1_bip_' + version1 + '_precision2_bip_' + version2 + '.tsv'
@@ -336,7 +431,7 @@ for i, row in precision_withinCondtionPPA_table_df.iterrows():
     
 table = construct_table(data)
 #elems.append(S0_5)
-P = Paragraph("Precision PPA (Across different codntions)", style_header_3)
+P = Paragraph("Precision PPA (Across different conditions)", style_header_3)
 elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
@@ -362,6 +457,68 @@ elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
+P = Paragraph("N samples with FP:Sample level False Postives, number of samples failed to be considered as positive"
+              ,
+              style = style_footer)
+elems.append(P)
+
+
+P = Paragraph("Precision comparison conclusions", style_header_3)
+elems.append(S0)
+elems.append(P)
+P = Paragraph("Precision variant level PPA", style_header_4)
+elems.append(S0)
+elems.append(P)
+
+precision_ppa_conclusions = ""
+
+variants = ["SNV", "INDEL", "CNV", "FUSION"]
+
+for i, variant in enumerate(variants):
+    version_1 = precision_variantLevelPPA_table_df[precision_variantLevelPPA_table_df['variant\nclass'] == variant]
+    version_2 = precision_variantLevelPPA_table_df[precision_variantLevelPPA_table_df['variant\nclass'] == variant]
+    expected_calls = int(precision_variantLevelPPA_table_df[precision_variantLevelPPA_table_df['variant\nclass'] == variant]['expected\ncalls'])
+    if len(version_1['bip:'+version1+'\n+ve calls']) == 0:
+        missed_by_version1 = 0
+    else:
+        missed_by_version1 = int(version_1['bip:'+version1+'\n+ve calls'])
+    if len(version_2['bip:'+version2+'\n+ve calls']) == 0:
+        missed_by_version2 = 0
+    else:
+        missed_by_version2 = int(version_2['bip:'+version2+'\n+ve calls'])
+
+    precision_ppa_conclusions += str(i+1) + ")There were "+str(missed_by_version1) +" " + variant + " calls by BIP version " + version1 + " and " +str(missed_by_version2) +" " + variant + " calls by BIP version " + version2 +" from a total of " +str(expected_calls)+ " expected calls<br/><br/>"
+
+P = Paragraph(precision_ppa_conclusions, style = style_text_1)
+elems.append(P)
+
+elems.append(S0)
+P = Paragraph("Precision cross conditions PPA", style_header_4)
+elems.append(S0)
+elems.append(P)
+precision_ppa_conclusions = ""
+
+variants = ["PC 1", "PC 2", "PC 3"]
+
+for i, variant in enumerate(variants):
+    version_1 = precision_withinCondtionPPA_table_df[precision_withinCondtionPPA_table_df['Condition'] == variant]
+    version_2 = precision_withinCondtionPPA_table_df[precision_withinCondtionPPA_table_df['Condition'] == variant]
+    expected_calls = int(precision_withinCondtionPPA_table_df[precision_withinCondtionPPA_table_df['Condition'] == variant]['expected\ncalls'])
+    if len(version_1['bip:'+version1+'\n+ve calls']) == 0:
+        missed_by_version1 = 0
+    else:
+        missed_by_version1 = int(version_1['bip:'+version1+'\n+ve calls'])
+    if len(version_2['bip:'+version2+'\n+ve calls']) == 0:
+        missed_by_version2 = 0
+    else:
+        missed_by_version2 = int(version_2['bip:'+version2+'\n+ve calls'])
+
+    precision_ppa_conclusions += str(i+1) + ")There were "+str(missed_by_version1) + " calls by BIP version " + version1 + " and " +str(missed_by_version2) +" calls by BIP version " + version2 +" from a total of " +str(expected_calls)+ " expected calls in condition " +variant+ "<br/><br/>"
+
+P = Paragraph(precision_ppa_conclusions, style = style_text_1)
+elems.append(P)
+
+
 
 elems.append(PageBreak())
 
@@ -409,6 +566,44 @@ elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
+P = Paragraph("LoD 5ng:Limit of Detection in 5ng concetration samples; LoD 30ng:Limit of Detection in 30ng concentration samples"
+              ,
+              style = style_footer)
+elems.append(P)
+
+
+P = Paragraph("Sensitivity comparison conclusions", style_header_3)
+elems.append(S0)
+elems.append(P)
+P = Paragraph("Limit of Detection", style_header_4)
+elems.append(S0)
+elems.append(P)
+
+LoD_conclusions = ""
+
+
+for i, lod_row in sensitivity_variantLoD_table_df.iterrows():
+    variant = lod_row['Variant']
+    variant_type = lod_row['Variant\nType']
+    new_line = False
+    if lod_row['LoD 5ng\nbip:' + version1] != lod_row['LoD 5ng\nbip:' + version2]:
+        LoD_conclusions += str(i+1)+ ") The LoD values for the " + variant_type + " " + variant + " at 5ng differs between bip:" + version1 + " LoD:" + str(lod_row['LoD 5ng\nbip:' + version1]) + " and bip:" + version2 + " LoD:" + str(lod_row['LoD 5ng\nbip:' + version2])
+        new_line = True
+    if lod_row['LoD 30ng\nbip:' + version1] != lod_row['LoD 30ng\nbip:' + version2]:    
+        if not new_line:
+            LoD_conclusions +=str(i+1)+ ") "
+        LoD_conclusions += "The LoD values for the " + variant_type + " " + variant + " at 30ng differs between bip:" + version1 + " LoD:" + str(lod_row['LoD 30ng\nbip:' + version1]) + " and bip:" + version2 + " LoD:" + str(lod_row['LoD 30ng\nbip:' + version2])
+        new_line = True
+    if new_line:
+        LoD_conclusions += "<br/>"
+    
+if LoD_conclusions == "":
+    LoD_conclusions = "LoD values do not differ between the two bip versions in comparsion (bip:"+ str(version1)+ " & bip:" + str(version2) +") accross the targeted " + str(len(sensitivity_variantLoD_table_df)) + " variants"
+        
+P = Paragraph(LoD_conclusions, style = style_text_1)
+elems.append(P)
+
+
 
 elems.append(PageBreak())
 
@@ -443,7 +638,7 @@ specificity_variantLoB_table_df = pd.read_csv(specificity_variantLoB_table_f, se
 
 specificity_variantLoB_table_df.columns = ['variant\ntype', 'chrom', 'position', 'gene', 'transcript\nid', 'exon',
        'mut\nnt', 'mut\naa', 'mut\nkey', 'mut\ncnt', 'pool.maf', 'cfDNA.maf',
-       'gDNA.maf', 'not detected\nbip:' + version1, 'not detected\nbip:' + version2]
+       'gDNA.maf', 'detected\nbip:' + version1, 'detected\nbip:' + version2]
 
 #del specificity_variantLoB_table_df['transcript\nid']
 del specificity_variantLoB_table_df['cfDNA.maf']
@@ -461,6 +656,40 @@ elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
 elems.append(table)
+P = Paragraph("Chrom:the chromosome number for which the variant is found; position:starting coordinate of the variant on the chromosome; transcript id:the id of the transcript"
+              "where the variant is on; exon:the exon number where the variant is located; mut nt: nucelotide level mutation; mut aa:Amino acid level mutation; mut cnt: "
+              "number of mutant molecules in the sample; pool,maf:mutant allele frequency in the pooled sample; not detected:variant detected or not within that sample."
+              ,
+              style = style_footer)
+elems.append(P)
+
+
+P = Paragraph("Specificity comparison conclusions", style_header_3)
+elems.append(S0)
+elems.append(P)
+P = Paragraph("Limit of Blank", style_header_4)
+elems.append(S0)
+elems.append(P)
+
+LoB_conclusions = ""
+
+version_1_variant_lob_dic, version_2_variant_lob_dic = {'CNV':0, 'FUSION':0, 'INDEL':0, 'SNV':0}, {'CNV':0, 'FUSION':0, 'INDEL':0, 'SNV':0}
+
+for i, lob_row in specificity_variantLoB_table_df.iterrows():
+    if str(lob_row['gene']) != 'nan':        
+        variant_type = lob_row['variant\ntype']
+        version_1_detected = lob_row['detected\nbip:' + version1]
+        version_2_detected = lob_row['detected\nbip:' + version2]
+        if version_1_detected:
+            version_1_variant_lob_dic[variant_type] += 1
+        if version_2_detected:
+            version_2_variant_lob_dic[variant_type] += 1    
+for i, k in enumerate(version_1_variant_lob_dic):
+    LoB_conclusions += str(i+1) + ") there were a total of "+str(version_1_variant_lob_dic[k]) + " " + k + " False detection cases for bip:" + version1 +", and a total of "+str(version_2_variant_lob_dic[k]) + " " + k + " False detection cases for bip:" + version2 + "<br/>" 
+
+P = Paragraph(LoB_conclusions, style = style_text_1)
+elems.append(P)
+
 
 elems.append(PageBreak())
 
