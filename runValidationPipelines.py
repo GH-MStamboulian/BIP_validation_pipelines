@@ -134,6 +134,6 @@ print('#########################')
 print('##  generate final report')
 print('#########################')
 
-os.system("python3 generateFinalReport.py " + version1 + " " + version2 + " " + out_dir)
+os.system("python3 generateFinalReport.py " + version1 + " " + version2 + " " + out_dir + " " + data_dir)
 
 print("finished processing in", time.time() - time_start, 'seconds')

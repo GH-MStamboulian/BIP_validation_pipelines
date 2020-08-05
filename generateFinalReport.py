@@ -23,6 +23,8 @@ version2 = sys.argv[2]#"3.5.3"
 
 out_dir = sys.argv[3]#"/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/BIP_validation_pipelines_comparisons/"
 
+data_dir = sys.argv[4]#"/ghds/groups/bioinformatics/02_DEVELOPMENT/200623_BIP_VALIDATION_PIPELINES/BIP_validation_pipelines_data/"
+
 fileName = out_dir + 'BIP_validation_report.pdf'
 
 accuracy_folder = "accuracy_comparison/"
@@ -37,6 +39,43 @@ def round_col(col):
 def construct_table(data):
     
     table = Table(data)
+
+    # add style
+    style = TableStyle([
+        #('BACKGROUND', (0,0), (3,0), colors.green),
+        ('TEXTCOLOR',(0,0),(-1,0),colors.black),
+
+        ('ALIGN',(0,0),(-1,-1),'CENTER'),
+        ('FONTNAME', (0,0), (-1, 0), 'Courier-Bold'),
+        ('FONTSIZE', (0,0), (-1, 0), 6),
+        ('FONTNAME', (0,1), (-1,-1), 'Courier'),
+        ('FONTSIZE', (0,1), (-1,-1), 6),
+        #('FONTSIZE', (0,4), (-1,0), 6),
+        ('BOTTOMPADDING', (0,0), (-1,0), 8),
+
+        ('BACKGROUND',(0,1),(-1,-1),colors.beige),
+    ])
+    table.setStyle(style)
+
+
+    # 3) Add borders
+    ts = TableStyle(
+        [
+        ('BOX',(0,0),(-1,-1),2,colors.black),
+
+        #('LINEBEFORE',(2,1),(2,-1),2,colors.red),
+        #('LINEABOVE',(0,2),(-1,2),2,colors.green),
+
+        ('GRID',(0,0),(-1,-1),2,colors.black),
+        ]
+    )
+    table.setStyle(ts)
+    
+    return table
+
+def construct_table_2(data):
+    
+    table = Table(data, hAlign='LEFT')
 
     # add style
     style = TableStyle([
@@ -130,6 +169,8 @@ elems.append(P)
 P = Paragraph('Sensitivity', style = style_text, bulletText='-')
 elems.append(P)
 P = Paragraph('Specificity', style = style_text, bulletText='-')
+elems.append(P)
+P = Paragraph('Appendix', style = style_text, bulletText='-')
 elems.append(P)
 elems.append(PageBreak())
 
@@ -372,6 +413,7 @@ elems.append(table)
 elems.append(PageBreak())
 
 
+
 ###############
 ##  specificity
 ###############
@@ -403,6 +445,7 @@ specificity_variantLoB_table_df.columns = ['variant\ntype', 'chrom', 'position',
        'mut\nnt', 'mut\naa', 'mut\nkey', 'mut\ncnt', 'pool.maf', 'cfDNA.maf',
        'gDNA.maf', 'not detected\nbip:' + version1, 'not detected\nbip:' + version2]
 
+#del specificity_variantLoB_table_df['transcript\nid']
 del specificity_variantLoB_table_df['cfDNA.maf']
 del specificity_variantLoB_table_df['gDNA.maf']
 
@@ -413,7 +456,80 @@ for i, row in specificity_variantLoB_table_df.iterrows():
     
 table = construct_table(data)
 #elems.append(S0_5)
-P = Paragraph("Sensitivity (Limit of Blank, False Positives)", style_header_3)
+P = Paragraph("Specificity (Limit of Blank, False Positives)", style_header_3)
+elems.append(S0_5)
+elems.append(P)
+elems.append(S0)
+elems.append(table)
+
+elems.append(PageBreak())
+
+############
+##  appendix
+############
+
+specificity_samples_f = data_dir + "specificity/" + version1+"/G360/sample_list.csv"
+specificity_flowcells = list(set(list(pd.read_csv(specificity_samples_f, sep = ',')['runid'])))
+
+sensitivity_samples_f = data_dir + "sensitivity/" + version1+"/sample_list.181204.csv"
+sensitivity_flowcells = list(set(list(pd.read_csv(sensitivity_samples_f, sep = ',')['runid'])))
+
+precision_samples_f = data_dir + "precision/" + version1+"/LineData_variant.csv"
+precision_flowcells = list(set(list(pd.read_csv(precision_samples_f, sep = ',')['runid'])))
+
+accuracy_samples_f = data_dir + "accuracy/" + version1+"/line_data.xlsx"
+accuracy_samples_df = pd.read_excel(accuracy_samples_f, sheet_name = "Sample Manifest")
+accuracy_flowcells = list(set(list(accuracy_samples_df[accuracy_samples_df['Processing Lab'] == 'cdx']['Flowcell ID'])))
+
+P = Paragraph("IV. APPENDIX", style = style_header)
+elems.append(P)
+
+data = list()
+data.append(["Specificity Flowcells"])
+data.extend([[item] for item in specificity_flowcells])
+    
+table = construct_table_2(data)
+
+P = Paragraph("Specificity Flowcells list", style_header_3)
+elems.append(S0_5)
+elems.append(P)
+elems.append(S0)
+elems.append(table)
+
+
+data = list()
+data.append(["Sensitivity Flowcells"])
+data.extend([[item] for item in sensitivity_flowcells])
+    
+table = construct_table_2(data)
+elems.append(S0)
+P = Paragraph("Sensitivity Flowcells list", style_header_3)
+elems.append(S0_5)
+elems.append(P)
+elems.append(S0)
+elems.append(table)
+
+
+data = list()
+data.append(["Precision Flowcells"])
+data.extend([[item] for item in precision_flowcells])
+    
+table = construct_table_2(data)
+elems.append(S0)
+P = Paragraph("Precision Flowcells list", style_header_3)
+elems.append(S0_5)
+elems.append(P)
+elems.append(S0)
+elems.append(table)
+
+
+data = list()
+data.append(["Accuracy Flowcells"])
+data.extend([[item] for item in accuracy_flowcells])
+    
+table = construct_table_2(data)
+elems.append(S0)
+P = Paragraph("accuracy Flowcells list", style_header_3)
 elems.append(S0_5)
 elems.append(P)
 elems.append(S0)
