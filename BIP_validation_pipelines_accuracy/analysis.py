@@ -118,7 +118,7 @@ df_comps[is_var]
 # ---------- Make a table with just the restricted reportable range -------------------------------
 from D000111d.settings import PRIORS_RRR
 study_data = load_study_data(
-    line_data_path=os.path.join(DATA_DIR, 'line_data_new.xlsx'), use_rrr=True)
+    line_data_path=line_file, use_rrr=True)
 df_manifest = study_data['manifest']
 df_calls = study_data['calls']
 df_qc = study_data['sample_qc']
